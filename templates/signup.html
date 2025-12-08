@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Sign Up</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body{font-family:Arial, sans-serif;background:#fafafa;padding:20px;}
+    .card{max-width:720px;margin:24px auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.06);}
+    h2{margin-top:0;}
+    .form-grid{display:grid;grid-template-columns:220px 1fr;row-gap:12px;column-gap:18px;align-items:center;}
+    label {font-weight:600;}
+    .input-field{width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;}
+    .btn{padding:10px 14px;background:#007bff;color:#fff;border:none;border-radius:6px;cursor:pointer;}
+    .error{color:#c00;font-size:0.9em;}
+    .submit-row{grid-column:1 / -1; margin-top:12px;}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Create account</h2>
+
+    <div class="flashes">
+      <!-- flash messages -->
+    <style>
+  .flash-success { color: green; }
+  .flash-danger { color: red; }
+</style>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <p class="{{ 'flash-success' if category == 'success' else 'flash-danger' }}">
+        {{ message }}
+      </p>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+    </div>
+
+    <form method="POST" action="{{ url_for('signup') }}">
+      {{ form.hidden_tag() }}
+      <div class="form-grid">
+        <label for="email">Email</label>
+        <div>
+          {{ form.email(class="input-field", id="email") }}
+          {% for e in form.email.errors %}<div class="error">{{ e }}</div>{% endfor %}
+        </div>
+
+        <label for="password">Password</label>
+        <div>
+          {{ form.password(class="input-field", id="password") }}
+          {% for e in form.password.errors %}<div class="error">{{ e }}</div>{% endfor %}
+        </div>
+
+        <label for="confirm">Confirm password</label>
+        <div>
+          {{ form.confirm(class="input-field", id="confirm") }}
+          {% for e in form.confirm.errors %}<div class="error">{{ e }}</div>{% endfor %}
+        </div>
+
+        <label for="role">Category</label>
+        <div>
+          {{ form.role(class="input-field", id="role") }}
+          {% for e in form.role.errors %}<div class="error">{{ e }}</div>{% endfor %}
+        </div>
+
+        <label for="gender">Gender</label>
+        <div>
+          {{ form.gender(class="input-field", id="gender") }}
+          {% for e in form.gender.errors %}<div class="error">{{ e }}</div>{% endfor %}
+        </div>
+
+        <label for="date_of_birth">Date of birth</label>
+        <div>
+          {{ form.date_of_birth(class="input-field", id="date_of_birth") }}
+          {% for e in form.date_of_birth.errors %}<div class="error">{{ e }}</div>{% endfor %}
+        </div>
+
+        <div class="submit-row">
+          <button type="submit" class="btn">{{ form.submit.label.text }}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- flash messages -->
+    <style>
+  .flash-success { color: green; }
+  .flash-danger { color: red; }
+</style>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <p class="{{ 'flash-success' if category == 'success' else 'flash-danger' }}">
+        {{ message }}
+      </p>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
