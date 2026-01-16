@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Request Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Admin Request Details</h2>
+
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Gender:</strong> {{ user.gender }}</p>
+    <p><strong>Date of Birth:</strong> {{ user.date_of_birth }}</p>
+    <p><strong>Current Role:</strong> {{ user.role }}</p>
+
+    <form method="post" action="{{ url_for('approve_admin', uid=user.uid) }}">
+        <button type="submit">Approve</button>
+    </form>
+
+    <form method="post" action="{{ url_for('reject_admin', uid=user.uid) }}">
+        <button type="submit">Reject</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('admin_requests') }}">⬅ Back to Requests</a>
+</div>
+
+</body>
+</html>

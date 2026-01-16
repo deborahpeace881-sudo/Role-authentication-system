@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Students</title>
+</head>
+<body>
+
+<h2>Students List</h2>
+
+<ul>
+{% for s in students %}
+    <li>
+        {{ s.email }}
+        <a href="{{ url_for('admin_student_profile', uid=s.uid) }}">View Profile</a>
+    </li>
+{% endfor %}
+</ul>
+
+<a href="{{ url_for('admin_dashboard') }}">⬅ Back to Admin Dashboard</a>
+
+</body>
+</html>
