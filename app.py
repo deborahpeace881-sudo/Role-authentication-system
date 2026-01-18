@@ -1,3 +1,5 @@
+import json
+import os
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import firebase_admin 
 from firebase_admin import credentials, auth, firestore 
@@ -7,9 +9,19 @@ app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
 # ---------------- FIREBASE INIT ----------------
-cred = credentials.Certificate("firebase_config.json")
-firebase_admin.initialize_app(cred)
-db = firestore.client() 
+if os.environ.get("FIREBASE_CONFIG"):
+    # Render / Production
+    firebase_config = json.loads(os.environ.get("FIREBASE_CONFIG"))
+    cred = credentials.Certificate(firebase_config)
+else:
+    # Local development
+    cred = credentials.Certificate("firebase_config.json")
+
+if not firebase_admin._apps:
+    firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+
 
 
 # 4️⃣ HELPER FUNCTIONS / DECORATORS  👈 (VERY IMPORTANT)
