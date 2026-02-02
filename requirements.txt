@@ -1,6 +1,4 @@
 Flask
 firebase-admin
 gunicorn
-
-
-
+python-dotenv

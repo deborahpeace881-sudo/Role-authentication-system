@@ -8,7 +8,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 
 
-app = Flask(__name__)
+app = Flask(__name__) 
 app.secret_key = "supersecretkey"
 
 
