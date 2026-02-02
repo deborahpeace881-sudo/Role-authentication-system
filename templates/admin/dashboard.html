@@ -1,0 +1,55 @@
+{% extends "layouts/base_admin.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1>Welcome, Admin 👋</h1>
+    <p class="subtitle">Manage the system using the menu on the left.</p>
+    
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">👨‍🎓</div>
+            <div class="stat-content">
+                <h3>Total Students</h3>
+                <p class="stat-number">{{ stats.total_students }}</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">👨‍🏫</div>
+            <div class="stat-content">
+                <h3>Total Lecturers</h3>
+                <p class="stat-number">{{ stats.total_lecturers }}</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">📋</div>
+            <div class="stat-content">
+                <h3>Pending Requests</h3>
+                <p class="stat-number">{{ stats.pending_requests }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-buttons">
+            <a href="{{ url_for('admin.admin_students') }}" class="action-btn">Manage Students</a>
+            <a href="{{ url_for('admin.admin_lecturers') }}" class="action-btn">Manage Lecturers</a>
+            <a href="{{ url_for('admin.admin_requests') }}" class="action-btn">Review Requests</a>
+            <a href="{{ url_for('admin.create_lecturer') }}" class="action-btn create-btn">➕ Create Lecturer</a>
+            <a href="{{ url_for('courses.admin_courses') }}" class="action-btn">Manage Courses</a>
+            <a href="{{ url_for('courses.admin_create_course') }}" class="action-btn create-btn">➕ Create Course</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

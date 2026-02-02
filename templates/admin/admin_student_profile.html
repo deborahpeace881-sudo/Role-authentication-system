@@ -1,0 +1,17 @@
+{% extends "layouts/base_admin.html" %}
+{% block title %}Student Profile{% endblock %}
+{% block header_title %}Student Profile{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <div class="profile-section" style="max-width:400px;margin:auto;">
+        <h2>Student Profile</h2>
+        <div class="profile-info">
+            <p><strong>Email:</strong> {{ student.email }}</p>
+            <p><strong>Gender:</strong> {{ student.gender }}</p>
+            <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+            <p><strong>Role:</strong> {{ student.role|capitalize }}</p>
+        </div>
+        <a href="{{ url_for('admin.admin_students') }}" class="action-btn" style="margin-top:20px;">⬅ Back to Students</a>
+    </div>
+</div>
+{% endblock %}

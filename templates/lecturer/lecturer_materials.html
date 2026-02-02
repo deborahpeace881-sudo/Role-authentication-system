@@ -1,0 +1,39 @@
+{% extends "layouts/base_lecturer.html" %}
+{% block title %}Materials{% endblock %}
+{% block header_title %}Materials{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <h2>Teaching Materials</h2>
+    <p>Upload and manage your course materials here.</p>
+    <!-- Upload form with course selection -->
+    <div class="materials-upload">
+        <form method="POST" enctype="multipart/form-data">
+            <label for="material_file">Upload Material (PDF, DOCX, etc.):</label>
+            <input type="file" id="material_file" name="material_file" accept=".pdf,.doc,.docx" required>
+            <label for="course_name">Select Course:</label>
+            <select id="course_name" name="course_name" required>
+                <option value="">-- Select Course --</option>
+                {% for course in courses %}
+                    <option value="{{ course.name }}">{{ course.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="action-btn">Upload</button>
+        </form>
+    </div>
+    <div class="materials-list">
+        <h3>Your Uploaded Materials</h3>
+        <ul>
+            {% if materials %}
+                {% for material in materials %}
+                <li>
+                    <a href="{{ material.url }}" target="_blank">{{ material.filename }}</a>
+                    ({{ material.course_name }})
+                </li>
+                {% endfor %}
+            {% else %}
+                <li>No materials uploaded yet.</li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "layouts/base_lecturer.html" %}
+{% block title %}Available Courses{% endblock %}
+{% block header_title %}Available Courses{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <h2>Available Courses</h2>
+    {% if courses %}
+    <table class="courses-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Department</th>
+                <th>Credits</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.name }}</td>
+                <td>{{ course.code }}</td>
+                <td>{{ course.department }}</td>
+                <td>{{ course.credits }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('courses.lecturer_assign_course', course_id=course.id) }}">
+                        <input type="hidden" name="user_id" value="{{ user_id }}">
+                        <button type="submit" class="action-btn">Assign to Me</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No available courses at the moment.</p>
+    {% endif %}
+</div>
+{% endblock %}

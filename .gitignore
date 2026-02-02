@@ -1,5 +1,15 @@
-firebase_config.json
+# Python
 venv/
 __pycache__/
-.env
+*.pyc
 
+# Environment & secrets
+.env
+firebase_config.json
+
+# Uploads (user-generated content)
+static/uploads/
+uploads/
+
+# OS files
+.DS_Store 

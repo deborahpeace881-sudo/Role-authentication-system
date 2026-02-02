@@ -1,0 +1,44 @@
+{% extends "layouts/base_student.html" %}
+{% block title %}Materials{% endblock %}
+{% block header_title %}Materials{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <h2>Materials</h2>
+    {% if materials %}
+    <div class="materials-list">
+        <table class="materials-table">
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>Course</th>
+                    <th>Type</th>
+                    <th>View</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for material in materials %}
+                <tr>
+                    <td>{{ material.filename }}</td>
+                    <td>{{ material.course_name }}</td>
+                    <td>{{ material.filename.split('.')[-1]|upper }}</td>
+                    <td>
+                        {% if material.filename.lower().endswith('.pdf') %}
+                            <a href="{{ material.url or material.filepath }}" class="action-btn" target="_blank">View</a>
+                        {% else %}
+                            <a href="https://docs.google.com/viewer?url={{ request.host_url ~ (material.url or material.filepath) | urlencode }}&embedded=true" class="action-btn" target="_blank">View</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ material.url or material.filepath }}" class="action-btn" download target="_blank">Download</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No materials available for your enrolled courses.</p>
+    {% endif %}
+</div>
+{% endblock %}

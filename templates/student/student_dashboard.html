@@ -1,0 +1,56 @@
+{% extends "layouts/base_student.html" %}
+{% block title %}Student Dashboard{% endblock %}
+{% block header_title %}Student Dashboard{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <h1>Welcome, {{ student_name }} 👋</h1>
+    <p class="subtitle">Here’s an overview of your academic activity.</p>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-content">
+                <h3>Enrolled Courses</h3>
+                <p class="stat-number">{{ enrolled_courses|length if enrolled_courses else 0 }}</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div class="stat-content">
+                <h3>Assignments/Tests</h3>
+                <p class="stat-number">{{ assignments_count or 0 }}</p>
+            </div>
+        </div>
+        <!-- Add more stat cards as needed -->
+    </div>
+
+    <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-buttons">
+            <a href="{{ url_for('student.student_courses') }}" class="action-btn">View/Enroll Courses</a>
+            <a href="{{ url_for('student.student_materials') }}" class="action-btn">View Materials</a>
+            <a href="{{ url_for('student.student_assignments') }}" class="action-btn">Assignments/Tests</a>
+            <a href="{{ url_for('student.student_results') }}" class="action-btn">View Results</a>
+            <a href="{{ url_for('student.student_profile') }}" class="action-btn">Profile</a>
+            <a href="{{ url_for('student.student_enrolled_courses') }}" class="action-btn">My Enrolled Courses</a>
+        </div>
+    </div>
+
+    <div class="enrolled-courses">
+        <h2>My Enrolled Courses</h2>
+        {% if enrolled_courses %}
+        <ul>
+            {% for course in enrolled_courses %}
+            <li>
+                <strong>{{ course.name }}</strong> ({{ course.code }}) - {{ course.department }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>You are not enrolled in any courses yet.
+            <a href="{{ url_for('student.student_courses') }}" class="action-btn" style="margin-left:10px;">Enroll now</a>
+        </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

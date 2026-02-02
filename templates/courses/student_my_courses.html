@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Courses</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+
+<div class="courses-container">
+    <div class="courses-header">
+        <h1>My Enrolled Courses</h1>
+        <a href="{{ url_for('courses.student_available_courses') }}" class="btn-primary">Browse Courses</a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for c, m in messages %}
+            <div class="alert alert-{{ c }}">
+                <span>{{ m }}</span>
+                <button type="button" class="close-alert">&times;</button>
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <div class="courses-grid">
+        {% for course in courses %}
+        <div class="course-card">
+            <div class="course-header">
+                <h3>{{ course.name }}</h3>
+                <span class="course-code">{{ course.code }}</span>
+            </div>
+            <p class="course-dept">{{ course.department }}</p>
+            <p class="course-desc">{{ course.description }}</p>
+            <div class="course-info">
+                <span>Credits: {{ course.credits }}</span>
+                <span>Max Students: {{ course.max_students }}</span>
+            </div>
+            <form method="POST" action="{{ url_for('courses.student_drop_course', enrollment_id=course.enrollment_id) }}" style="display:inline;">
+                <button type="submit" class="btn-drop" onclick="return confirm('Drop this course?')">Drop Course</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not courses %}
+    <p class="no-data">Not enrolled in any courses. <a href="{{ url_for('courses.student_available_courses') }}">Browse courses</a></p>
+    {% endif %}
+</div>
+
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Courses</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+
+<div class="courses-container">
+    <div class="courses-header">
+        <h1>Available Courses</h1>
+        <a href="{{ url_for('courses.student_my_courses') }}" class="btn-primary">My Enrolled Courses</a>
+    </div>
+
+    <div class="courses-grid">
+        {% for course in courses %}
+        <div class="course-card">
+            <div class="course-header">
+                <h3>{{ course.name }}</h3>
+                <span class="course-code">{{ course.code }}</span>
+            </div>
+            <p class="course-dept">{{ course.department }}</p>
+            <p class="course-desc">{{ course.description }}</p>
+            <div class="course-info">
+                <span>Credits: {{ course.credits }}</span>
+                <span>Max Students: {{ course.max_students }}</span>
+            </div>
+            <form method="POST" action="{{ url_for('courses.student_enroll_course', course_id=course.id) }}">
+                <input type="hidden" name="user_id" value="student_id">
+                <button type="submit" class="btn-enroll">Enroll</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not courses %}
+    <p class="no-data">No courses available.</p>
+    {% endif %}
+</div>
+
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+</body>
+</html>

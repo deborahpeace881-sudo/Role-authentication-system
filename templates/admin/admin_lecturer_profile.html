@@ -1,0 +1,16 @@
+{% extends "layouts/base_admin.html" %}
+{% block title %}Lecturer Profile{% endblock %}
+{% block header_title %}Lecturer Profile{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <div class="profile-section" style="max-width:400px;margin:auto;">
+        <h2>Lecturer Profile</h2>
+        <div class="profile-info">
+            <p><strong>Email:</strong> {{ lecturer.email }}</p>
+            <p><strong>Gender:</strong> {{ lecturer.gender }}</p>
+            <p><strong>Date of Birth:</strong> {{ lecturer.date_of_birth }}</p>
+        </div>
+        <a href="{{ url_for('admin.admin_lecturers') }}" class="action-btn" style="margin-top:20px;">⬅ Back to Lecturers</a>
+    </div>
+</div>
+{% endblock %}

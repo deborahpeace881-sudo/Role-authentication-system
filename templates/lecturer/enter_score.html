@@ -1,0 +1,18 @@
+{% extends "layouts/base_lecturer.html" %}
+{% block title %}Enter/View Score{% endblock %}
+{% block header_title %}Enter/View Score{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <h2>Enter/View Score</h2>
+    <p><strong>Student:</strong> {{ student.name }} ({{ student.email }})</p>
+    <p><strong>Course:</strong> {{ course.name }} ({{ course.code }})</p>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="score">Score:</label>
+            <input type="number" id="score" name="score" min="0" max="100" value="{{ score or '' }}" required>
+        </div>
+        <button type="submit" class="action-btn">Save</button>
+    </form>
+</div>
+{% endblock %}

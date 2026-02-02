@@ -1,0 +1,44 @@
+{% extends "layouts/base_admin.html" %}
+{% block title %}Override Results{% endblock %}
+{% block header_title %}Override Results{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <h2>Override Results for {{ student.email }}</h2>
+    {% if results %}
+    <table class="results-table">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Score</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in results %}
+            <tr>
+                <td>{{ r.course_name }}</td>
+                <td>
+                    <form method="post" style="display:inline;">
+                        <input type="hidden" name="score_id" value="{{ r.id }}">
+                        <input type="hidden" name="action" value="update">
+                        <input type="number" name="new_score" value="{{ r.score }}" min="0" max="100" style="width:60px;">
+                        <button type="submit" class="action-btn" style="padding:4px 10px;">Update</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" style="display:inline;">
+                        <input type="hidden" name="score_id" value="{{ r.id }}">
+                        <input type="hidden" name="action" value="delete">
+                        <button type="submit" class="action-btn" style="background:#e74c3c;padding:4px 10px;">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No results found for this student.</p>
+    {% endif %}
+    <a href="{{ url_for('admin.admin_students') }}" class="action-btn" style="margin-top:20px;">⬅ Back to Students</a>
+</div>
+{% endblock %}

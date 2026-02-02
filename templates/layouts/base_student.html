@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Student{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="topbar">
+    <button id="menu-toggle" class="menu-btn">☰</button>
+    <h2>Student Panel</h2>
+    <div class="topbar-right">
+        <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
+        <div class="admin-info">
+            <span class="admin-name">{{ session.get('name', 'Student') }}</span>
+            <span class="admin-email">{{ session.get('email', '') }}</span>
+        </div>
+    </div>
+</header>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <h3>Menu</h3>
+    </div>
+    <ul class="sidebar-menu">
+        <li><a href="{{ url_for('student.student_dashboard') }}" class="menu-item">🏠 Dashboard</a></li>
+        <li><a href="{{ url_for('student.student_courses') }}" class="menu-item">📚 Courses</a></li>
+        <li><a href="{{ url_for('student.student_materials') }}" class="menu-item">📁 Materials</a></li>
+        <li><a href="{{ url_for('student.student_assignments') }}" class="menu-item">📝 Assignments/Tests</a></li>
+        <li><a href="{{ url_for('student.student_results') }}" class="menu-item">📊 Results</a></li>
+        <li><a href="{{ url_for('student.student_profile') }}" class="menu-item">👤 Profile</a></li>
+        <li><a href="{{ url_for('auth.logout') }}" class="menu-item logout">🚪 Logout</a></li>
+    </ul>
+</aside>
+
+<!-- Main content -->
+<main id="content" class="content">
+    {% block content %}{% endblock %}
+</main>
+
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

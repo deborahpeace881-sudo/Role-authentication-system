@@ -1,0 +1,41 @@
+{% extends "layouts/base_lecturer.html" %}
+{% block title %}Results{% endblock %}
+{% block header_title %}Results{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <h2>Results</h2>
+    <form method="GET" class="filter-form">
+        <label for="course_filter">Filter by Course:</label>
+        <select name="course_id" id="course_filter" onchange="this.form.submit()">
+            <option value="">-- All Courses --</option>
+            {% for course in courses %}
+                <option value="{{ course.id }}" {% if selected_course_id == course.id %}selected{% endif %}>
+                    {{ course.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+    {% if results %}
+    <table class="results-table">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Student Email</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in results %}
+            <tr>
+                <td>{{ entry.student_name }}</td>
+                <td>{{ entry.student_email }}</td>
+                <td>{{ entry.score }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No results to display.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "layouts/base_admin.html" %}
+
+{% block content %}
+<div class="courses-container">
+    <div class="courses-header">
+        <h1>My Courses</h1>
+        <a href="{{ url_for('courses.lecturer_available_courses') }}" class="btn-primary">Browse Courses</a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for c, m in messages %}
+            <div class="alert alert-{{ c }}">
+                <span>{{ m }}</span>
+                <button type="button" class="close-alert">&times;</button>
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <div class="courses-grid">
+        {% for course in courses %}
+        <div class="course-card">
+            <div class="course-header">
+                <h3>{{ course.name }}</h3>
+                <span class="course-code">{{ course.code }}</span>
+            </div>
+            <p class="course-dept">{{ course.department }}</p>
+            <p class="course-desc">{{ course.description }}</p>
+            <div class="course-info">
+                <span>Credits: {{ course.credits }}</span>
+                <span>Max Students: {{ course.max_students }}</span>
+            </div>
+            <form method="POST" action="{{ url_for('courses.lecturer_remove_course', assignment_id=course.assignment_id) }}" style="display:inline;">
+                <button type="submit" class="btn-remove" onclick="return confirm('Remove this course?')">Remove Course</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not courses %}
+    <p class="no-data">Not teaching any courses yet. <a href="{{ url_for('courses.lecturer_available_courses') }}">Select a course</a></p>
+    {% endif %}
+</div>
+
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}
