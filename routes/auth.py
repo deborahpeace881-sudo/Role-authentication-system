@@ -37,10 +37,16 @@ def login():
         email = request.form.get("email", "").strip().lower()
         password = request.form.get("password", "")
 
-        try: 
+        try:
+            print("STEP 1: Login attempt started")
+            print("Email:", email)
+
             ok, data = verify_password_with_firebase(email, password)
 
-            # ---- Firebase password failed
+            print("STEP 2: Firebase response")
+            print("OK:", ok)
+            print("DATA:", data)
+
             if not ok:
                 error_message = "Invalid login details."
 
@@ -49,41 +55,40 @@ def login():
                     if isinstance(error, dict):
                         error_message = error.get("message", error_message)
 
-                if error_message == "EMAIL_NOT_FOUND":
-                    flash("No account found with this email.", "danger")
-                elif error_message == "INVALID_PASSWORD":
-                    flash("Incorrect password.", "danger")
-                elif error_message == "Missing Firebase Web API Key":
-                    flash("Server error. Contact admin.", "danger")
-                else:
-                    flash("Invalid login details.", "danger")
-
+                print("STEP 3: Firebase auth failed:", error_message)
+                flash(error_message, "danger")
                 return render_template("auth/login.html")
 
-            # ---- Firebase password OK
+            print("STEP 4: Firebase password verified")
+
             user = auth.get_user_by_email(email)
+            print("STEP 5: Firebase user found:", user.uid)
+
             user_doc = db.collection("users").document(user.uid).get()
 
-            if not user_doc.exists: 
+            if not user_doc.exists:
+                print("STEP 6 ERROR: Firestore user not found")
                 flash("User profile not found.", "danger")
                 return render_template("auth/login.html")
 
             user_data = user_doc.to_dict()
+            print("STEP 7: Firestore data:", user_data)
+
             role = user_data.get("role")
 
-            # ---- Block pending / rejected admins
-            if role == "pending":
+            if role == "pending": 
                 flash("Your admin account is pending approval.", "warning")
                 return render_template("auth/login.html")
 
             if role == "rejected":
-                flash("Your admin account was rejected.", "danger")
+                flash("Your admin account request was rejected.", "danger")
                 return render_template("auth/login.html")
 
-            # ---- Login success
-            session["uid"] = user.uid
+            session["uid"] = user.uid 
             session["email"] = user_data.get("email")
             session["role"] = role
+
+            print("STEP 8: Session created, role =", role)
 
             if role == "admin":
                 return redirect(url_for("admin.dashboard"))
@@ -92,12 +97,15 @@ def login():
             elif role == "student":
                 return redirect(url_for("student.student_dashboard"))
 
-            flash("Unknown user role.", "danger")
-            return render_template("auth/login.html")
+            print("STEP 9 ERROR: Unknown role")
+            flash("Unknown user role.", "danger") 
 
         except Exception as e:
-            flash("Login failed. Try again.", "danger")
-            return render_template("auth/login.html")
+            print("🔥 LOGIN CRASHED 🔥")
+            print("ERROR TYPE:", type(e))
+            print("ERROR MESSAGE:", e)
+
+            flash(f"Server error: {e}", "danger")
 
     return render_template("auth/login.html")
 

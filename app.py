@@ -2,26 +2,18 @@ import json
 import os
 from flask import Flask, session, redirect, url_for, flash
 from dotenv import load_dotenv
-load_dotenv()
-
+load_dotenv() 
 import firebase_admin
 from firebase_admin import credentials, firestore
-
-
-app = Flask(__name__) 
+app = Flask(__name__)  
 app.secret_key = "supersecretkey"
 
 
 # ---------------- FIREBASE INIT ----------------
-if os.environ.get("FIREBASE_CONFIG"): 
-    firebase_config = json.loads(os.environ.get("FIREBASE_CONFIG"))
-    cred = credentials.Certificate(firebase_config)
-else:
-    cred = credentials.Certificate("firebase_config.json") 
-
+ 
 if not firebase_admin._apps:
-    firebase_admin.initialize_app(cred)
-
+    cred = credentials.Certificate("firebase_config.json")
+    firebase_admin.initialize_app(cred) 
 db = firestore.client()
 
 app.db = db
