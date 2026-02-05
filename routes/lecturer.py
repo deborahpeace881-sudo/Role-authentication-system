@@ -3,6 +3,7 @@ import os
 from werkzeug.utils import secure_filename
 import csv
 from flask import Response
+from decorators import role_required
 
 lecturer_bp = Blueprint("lecturer", __name__, url_prefix="/lecturer")
 
@@ -13,6 +14,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @lecturer_bp.route("/dashboard")
+@role_required("lecturer")
 def dashboard():
     db = current_app.db
     lecturer_email = session.get("email", "Lecturer")
@@ -38,6 +40,7 @@ def dashboard():
     )
 
 @lecturer_bp.route("/courses")
+@role_required("lecturer")
 def courses():
     db = current_app.db
     lecturer_id = session.get("uid")
@@ -55,6 +58,7 @@ def courses():
     return render_template("lecturer/courses.html", assigned_courses=assigned_courses)
 
 @lecturer_bp.route("/materials", methods=["GET", "POST"])
+@role_required("lecturer")
 def materials():
     db = current_app.db
     lecturer_id = session.get("uid")

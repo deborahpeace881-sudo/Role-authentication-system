@@ -31,7 +31,7 @@ def verify_password_with_firebase(email, password):
 # -----------------------------
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
-    db = current_app.db
+    db = current_app.db 
 
     if request.method == "POST":
         email = request.form.get("email", "").strip().lower()

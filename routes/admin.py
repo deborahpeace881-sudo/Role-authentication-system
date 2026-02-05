@@ -40,7 +40,7 @@ def dashboard():
 def admin_students():
     db = current_app.db
 
-    students_ref = db.collection("users").where(filter=("role", "==", "student")).stream()
+    students_ref = db.collection("users").where("role", "==", "student").stream()
     students = []
 
     for doc in students_ref:
@@ -58,7 +58,7 @@ def admin_students():
 def admin_lecturers():
     db = current_app.db
 
-    lecturers_ref = db.collection("users").where(filter=("role", "==", "lecturer")).stream()
+    lecturers_ref = db.collection("users").where("role", "==", "lecturer").stream()
     lecturers = []
 
     for doc in lecturers_ref:
@@ -77,7 +77,7 @@ def admin_lecturers():
 def admin_requests():
     db = current_app.db
     # Fetch all users with role 'pending'
-    requests_ref = db.collection("users").where(filter=("role", "==", "pending")).stream()
+    requests_ref = db.collection("users").where("role", "==", "pending").stream()
     requests = []
     for doc in requests_ref:
         data = doc.to_dict()
