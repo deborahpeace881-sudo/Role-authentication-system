@@ -9,7 +9,7 @@ from firebase_admin import credentials, firestore
 
 
 app = Flask(__name__) 
-app.secret_key = "supersecretkey"
+app.secret_key = os.environ.get("SECRET_KEY")
 
 
 # ---------------- FIREBASE INIT ----------------
