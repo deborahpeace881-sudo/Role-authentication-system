@@ -2,21 +2,35 @@ import json
 import os
 from flask import Flask, session, redirect, url_for, flash
 from dotenv import load_dotenv
-load_dotenv() 
+load_dotenv()
+
 import firebase_admin
 from firebase_admin import credentials, firestore
-app = Flask(__name__)  
+
+
+app = Flask(__name__) 
 app.secret_key = "supersecretkey"
 
 
 # ---------------- FIREBASE INIT ----------------
- 
-if not firebase_admin._apps:
-    cred = credentials.Certificate("firebase_config.json")
-    firebase_admin.initialize_app(cred) 
-db = firestore.client()
+# ---------------- FIREBASE INIT ----------------
+import json
+import firebase_admin
+from firebase_admin import credentials, firestore
 
+if not firebase_admin._apps:
+    firebase_confifg = os.environ.get("FIREBASE_CONFIG")
+    if not firebase_confifg:
+        raise RuntimeError("missing FIREBASE_CONFIG")
+    
+    cred = credentials.Certificate(json.loads(firebase_confifg))
+    firebase_admin.initialize_app(cred)
+
+
+
+db = firestore.client() 
 app.db = db
+    
 
 
 # Blueprints
@@ -42,9 +56,8 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(debug=True) 
-    
-    
+    app.run(debug=True)
 
 
-    
+
+
