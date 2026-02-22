@@ -113,11 +113,13 @@ def materials():
     )
 
 @lecturer_bp.route("/materials/download/<filename>")
+@role_required("lecturer")
 def download_material(filename):
     from flask import send_from_directory
     return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True)
 
 @lecturer_bp.route("/students")
+@role_required("lecturer")
 def students():
     db = current_app.db
     lecturer_id = session.get("uid")
@@ -158,6 +160,7 @@ def students():
     return render_template("lecturer/lecturer_students.html", students=students)
 
 @lecturer_bp.route("/results", methods=["GET", "POST"])
+@role_required("lecturer")
 def results():
     db = current_app.db
     lecturer_id = session.get("uid")
@@ -207,6 +210,7 @@ def results():
     )
 
 @lecturer_bp.route("/profile", methods=["GET", "POST"])
+@role_required("lecturer")
 def profile():
     db = current_app.db
     lecturer_id = session.get("uid")
@@ -232,6 +236,7 @@ def profile():
     return render_template("lecturer/lecturer_profile.html", lecturer=lecturer)
 
 @lecturer_bp.route("/enter_score/<student_id>/<course_id>", methods=["GET", "POST"])
+@role_required("lecturer")
 def enter_score(student_id, course_id):
     db = current_app.db
 
@@ -272,6 +277,7 @@ def enter_score(student_id, course_id):
     )
 
 @lecturer_bp.route("/export_results")
+@role_required("lecturer")
 def export_results():
     db = current_app.db
     lecturer_id = session.get("uid")
@@ -306,6 +312,7 @@ def export_results():
                     headers={"Content-Disposition": "attachment;filename=results.csv"})
 
 @lecturer_bp.route("/test_assignment", methods=["GET", "POST"])
+@role_required("lecturer")
 def test_assignment():
     db = current_app.db
     lecturer_id = session.get("uid")

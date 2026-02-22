@@ -9,7 +9,7 @@ from firebase_admin import credentials, firestore
 
 
 app = Flask(__name__) 
-app.secret_key = os.environ.get("SECRET_KEY")
+app.secret_key = "dev-secret-key"  # Replace with a secure key in production
 
 
 # ---------------- FIREBASE INIT ----------------
@@ -56,7 +56,7 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1")
 
 
 

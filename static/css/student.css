@@ -195,3 +195,120 @@ body {
     padding-top: 8px;
     padding-bottom: 8px;
 }
+
+/* Responsive layout for student panel, matching admin style */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #232f3e;
+    color: #fff;
+    padding: 0 24px;
+    height: 56px;
+    position: relative;
+    z-index: 10;
+}
+.menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+}
+.topbar h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.sidebar {
+    width: 220px;
+    background: #1a222b;
+    color: #fff;
+    height: 100vh;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    overflow-y: auto;
+    transition: transform 0.3s;
+}
+.sidebar-header {
+    padding: 18px 24px 8px 24px;
+}
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar-menu li {
+    margin: 0;
+}
+.sidebar-menu .menu-item {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 14px 24px;
+    transition: background 0.2s;
+}
+.sidebar-menu .menu-item:hover, .sidebar-menu .menu-item.active {
+    background: #2d3a4a;
+}
+.sidebar-menu .logout {
+    color: #e74c3c;
+}
+.content {
+    margin-left: 220px;
+    padding: 32px 24px 24px 24px;
+    min-height: calc(100vh - 56px);
+    transition: margin-left 0.3s;
+}
+/* Hamburger and sidebar for mobile/tablet */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        left: 0;
+        top: 56px;
+        height: calc(100vh - 56px);
+        z-index: 100;
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .content {
+        margin-left: 0;
+    }
+    .menu-btn {
+        display: inline-block;
+    }
+}
+@media (max-width: 600px) {
+    .content {
+        padding: 16px 6px 16px 6px;
+    }
+    .topbar h2 {
+        font-size: 1.1rem;
+    }
+}
+/* Dashboard cards responsive grid */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+@media (max-width: 600px) {
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}

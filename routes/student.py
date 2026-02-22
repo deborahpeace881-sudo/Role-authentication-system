@@ -1,10 +1,12 @@
 import os
 from flask import Blueprint, render_template, session, current_app, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename  # <-- Add this import
+from decorators import role_required 
 
 student_bp = Blueprint("student", __name__, url_prefix="/student")
 
 @student_bp.route("/dashboard")
+@role_required("student")
 def student_dashboard():
     db = current_app.db
     student_id = session.get("uid")
@@ -33,6 +35,7 @@ def student_dashboard():
     )
 
 @student_bp.route("/courses", methods=["GET", "POST"])
+@role_required("student")
 def student_courses():
     db = current_app.db
     student_id = session.get("uid")
@@ -80,6 +83,7 @@ def student_courses():
     )
 
 @student_bp.route("/materials")
+@role_required("student")
 def student_materials():
     db = current_app.db
     student_id = session.get("uid")
@@ -110,6 +114,7 @@ def student_materials():
     )
 
 @student_bp.route("/assignments")
+@role_required("student")
 def student_assignments():
     db = current_app.db
     student_id = session.get("uid")
@@ -137,6 +142,7 @@ def student_assignments():
     return render_template("student/student_assignments.html", assignments=assignments)
 
 @student_bp.route("/results")
+@role_required("student")
 def student_results():
     db = current_app.db
     student_id = session.get("uid")
@@ -173,6 +179,7 @@ def student_results():
     return render_template("student/student_results.html", results=results)
 
 @student_bp.route("/profile", methods=["GET", "POST"])
+@role_required("student")
 def student_profile():
     db = current_app.db
     student_id = session.get("uid")
@@ -198,6 +205,7 @@ def student_profile():
     return render_template("student/student_profile.html", student=student)
 
 @student_bp.route("/enrolled_courses")
+@role_required("student")
 def student_enrolled_courses():
     db = current_app.db
     student_id = session.get("uid")
