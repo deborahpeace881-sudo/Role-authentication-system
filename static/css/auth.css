@@ -151,6 +151,7 @@ body.auth-body.dark-theme .auth-header p {
 .form-group {
     display: flex;
     flex-direction: column;
+    margin-bottom: 18px;
 }
 
 .form-row {
@@ -182,8 +183,10 @@ body.auth-body.dark-theme label {
     left: 15px;
     font-size: 18px;
     pointer-events: none;
+    color: #888;
 }
 
+input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="date"],
@@ -196,8 +199,11 @@ select {
     transition: all 0.3s ease;
     background-color: white;
     color: var(--text-light);
+    margin-top: 4px;
+    box-sizing: border-box;
 }
 
+body.auth-body.dark-theme input[type="text"],
 body.auth-body.dark-theme input[type="email"],
 body.auth-body.dark-theme input[type="password"],
 body.auth-body.dark-theme input[type="date"],
@@ -207,6 +213,7 @@ body.auth-body.dark-theme select {
     border-color: #404040;
 }
 
+input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="date"]:focus,
@@ -296,6 +303,7 @@ body.auth-body.dark-theme .auth-footer p {
     input[type="email"],
     input[type="password"],
     input[type="date"],
+    input[type="text"],
     select {
         padding: 10px 12px 10px 40px;
         font-size: 16px;
@@ -305,4 +313,70 @@ body.auth-body.dark-theme .auth-footer p {
         font-size: 16px;
         left: 12px;
     }
+}
+
+/* Add styling for the new Full Name field and improve input alignment */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    font-size: 18px;
+    pointer-events: none;
+    color: #888;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 2px solid #ecf0f1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: var(--text-light);
+    margin-top: 4px;
+    box-sizing: border-box;
+}
+
+body.auth-body.dark-theme input[type="text"],
+body.auth-body.dark-theme input[type="email"],
+body.auth-body.dark-theme input[type="password"],
+body.auth-body.dark-theme input[type="date"],
+body.auth-body.dark-theme select {
+    background-color: #3d3d3d;
+    color: var(--text-dark);
+    border-color: #404040;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+input::placeholder {
+    color: #bdc3c7;
+}
+
+body.auth-body.dark-theme input::placeholder {
+    color: #7f8c8d;
 }

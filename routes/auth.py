@@ -94,7 +94,8 @@ def signup():
     db = current_app.db
 
     if request.method == "POST":
-        email = request.form.get("email", "").strip().lower()
+        name = request.form.get("name")
+        email = request.form.get("email").strip().lower()
         password = request.form.get("password")
         role = request.form.get("role")
         gender = request.form.get("gender")
@@ -110,6 +111,7 @@ def signup():
             user_role = "pending" if role == "admin" else "student" 
 
             db.collection("users").document(user.uid).set({
+                "name": name,
                 "email": email,
                 "role": user_role,
                 "gender": gender,

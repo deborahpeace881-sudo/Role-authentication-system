@@ -81,7 +81,7 @@ def admin_requests():
     requests = []
     for doc in requests_ref:
         data = doc.to_dict()
-        data["uid"] = doc.id
+        data["id"] = doc.id
         requests.append(data)
     return render_template("admin/admin_requests.html", requests=requests)
 

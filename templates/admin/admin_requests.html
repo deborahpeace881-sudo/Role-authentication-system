@@ -1,19 +1,11 @@
 {% extends "layouts/base_admin.html" %}
-{% block title %}Pending Admin Requests{% endblock %}
+
+{% block title %}Admin Requests{% endblock %}
 {% block header_title %}Pending Admin Requests{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>Pending Admin Requests</h2>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-
-    {% if requests %}
     <table class="requests-table">
         <thead>
             <tr>
@@ -22,29 +14,60 @@
                 <th>Actions</th>
             </tr>
         </thead>
+
         <tbody>
+        {% if requests %}
             {% for r in requests %}
             <tr>
                 <td>{{ r.email }}</td>
                 <td>{{ r.role|capitalize }}</td>
                 <td>
-                    <a href="{{ url_for('admin.admin_request_profile', request_id=r.id) }}" class="action-btn">View Profile</a>
-                    <form style="display:inline" method="post" action="{{ url_for('admin.approve_admin', request_id=r.id) }}">
-                        <button type="submit" class="action-btn" style="background:#2ecc40;">Approve</button>
+
+                    <!-- View Profile -->
+                    <a href="{{ url_for('admin.admin_request_profile', request_id=r.id) }}"
+                       class="action-btn">
+                        View Profile
+                    </a>
+
+                    <!-- Approve -->
+                    <form method="POST"
+                          action="{{ url_for('admin.approve_admin', request_id=r.id) }}"
+                          style="display:inline;">
+                        <button type="submit"
+                                class="action-btn"
+                                style="background:#2ecc40;">
+                            Approve
+                        </button>
                     </form>
-                    <form style="display:inline" method="post" action="{{ url_for('admin.reject_admin', request_id=r.id) }}">
-                        <button type="submit" class="action-btn" style="background:#e74c3c;">Reject</button>
+
+                    <!-- Reject -->
+                    <form method="POST"
+                          action="{{ url_for('admin.reject_admin', request_id=r.id) }}"
+                          style="display:inline;">
+                        <button type="submit"
+                                class="action-btn"
+                                style="background:#e74c3c;">
+                            Reject
+                        </button>
                     </form>
+
                 </td>
             </tr>
             {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="3">No pending requests.</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
-    {% else %}
-      <p>No pending requests.</p>
-    {% endif %}
 
-    <a href="{{ url_for('admin.dashboard') }}" class="action-btn" style="margin-top:20px;">⬅ Back to Admin Dashboard</a>
+    <br>
+    <a href="{{ url_for('admin.dashboard') }}"
+       class="action-btn"
+       style="margin-top:20px;">
+        ← Back to Admin Dashboard
+    </a>
+
 </div>
-{% endblock %}
-
+{% endblock %} 
