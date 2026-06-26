@@ -1,39 +1,52 @@
 {% extends "layouts/base_student.html" %}
 {% block title %}Assignments/Tests{% endblock %}
-{% block header_title %}Assignments/Tests{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>Assignments/Tests</h2>
+
+    <div class="page-header">
+        <h2>Assignments / Tests</h2>
+        <p class="subtitle">All assignments and tests for your enrolled courses.</p>
+    </div>
+
     {% if assignments %}
-    <table class="assignments-table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Course</th>
-                <th>Due Date</th>
-                <th>Status</th>
-                <th>Take/Test</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for assignment in assignments %}
-            <tr>
-                <td>{{ assignment.title }}</td>
-                <td>{{ assignment.course_name }}</td>
-                <td>{{ assignment.due_date }}</td>
-                <td>Available</td>
-                <td>
-                    <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                        <span style="margin-bottom: 4px;">&nbsp;</span>
-                        <a href="{{ assignment.form_link }}" target="_blank" class="action-btn" style="margin-top: 4px; padding: 6px 16px; font-size: 0.95em;">Open Form</a>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table class="assignments-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Course</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for assignment in assignments %}
+                <tr>
+                    <td>{{ assignment.title }}</td>
+                    <td>{{ assignment.course_name }}</td>
+                    <td>{{ assignment.due_date }}</td>
+                    <td>
+                        <span class="status-badge">Available</span>
+                    </td>
+                    <td>
+                        <div class="td-actions">
+                            <a href="{{ assignment.form_link }}" target="_blank" class="action-btn" style="padding: 7px 14px;  font-size: 12px;">
+                                <i class="ti ti-external-link"></i> Open Form
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% else %}
-    <p>No assignments or tests available for your enrolled courses.</p>
+        <div class="table-wrapper">
+            <p class="no-data">No assignments or tests available for your enrolled courses.</p>
+        </div>
     {% endif %}
+
 </div>
-{% endblock %}
+{% endblock %} 

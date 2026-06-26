@@ -1,8 +1,6 @@
 {% extends "layouts/base_lecturer.html" %}
 
-{% block title %}Lecturer Dashboard{% endblock %}
-
-{% block header_title %}Lecturer Dashboard{% endblock %}
+{% block title %}Lecturer Dashboard{% endblock %} 
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
@@ -10,53 +8,76 @@
 
 {% block content %}
 <div class="dashboard-container">
-    <!-- Add this block to show errors and messages -->
+
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for c, m in messages %}
                 <div class="alert alert-{{ c }}">
+                    <i class="ti ti-info-circle"></i>
                     <span>{{ m }}</span>
+                    <button type="button" class="close-alert">&times;</button>
                 </div>
             {% endfor %}
         {% endif %}
     {% endwith %}
 
-    <h1>Welcome, {{ lecturer_name }} 👨‍🏫</h1>
-    <p class="subtitle">Manage your courses and assignments below.</p>
+    <div class="page-header">
+        <h1>Welcome, {{ lecturer_name }} 👨‍🏫</h1>
+        <p class="subtitle">Manage your courses and assignments below.</p>
+    </div>
 
+    <!-- Stats -->
     <div class="stats-grid">
         <div class="stat-card">
-            <div class="stat-icon">📚</div>
+            <div class="stat-icon">
+                <i class="ti ti-book" style="font-size:26px; color:var(--accent-color);"></i>
+            </div>
             <div class="stat-content">
                 <h3>Assigned Courses</h3>
                 <p class="stat-number">{{ assigned_courses|length if assigned_courses else 0 }}</p>
             </div>
         </div>
-        <!-- Add more stat cards as needed -->
-    </div>
+    </div> 
 
+    <!-- Quick Actions -->
     <div class="quick-actions">
         <h2>Quick Actions</h2>
         <div class="action-buttons">
-            <a href="{{ url_for('courses.lecturer_available_courses') }}" class="action-btn">View Available Courses</a>
-            <a href="{{ url_for('lecturer.courses') }}" class="action-btn">My Courses</a>
-            <!-- <a href="{{ url_for('courses.lecturer_my_courses') }}" class="action-btn">View Courses</a> -->
+            <a href="{{ url_for('courses.lecturer_available_courses') }}" class="action-btn">
+                <i class="ti ti-book"></i> Available Courses
+            </a>
+            <a href="{{ url_for('lecturer.courses') }}" class="action-btn">
+                <i class="ti ti-list"></i> My Courses
+            </a>
         </div>
     </div>
 
-    <!-- Example: List assigned courses -->
+    <!-- Assigned Courses List -->
     {% if assigned_courses %}
-    <div class="assigned-courses">
+    <div class="quick-actions" style="margin-top: 24px;">
         <h2>My Assigned Courses</h2>
-        <ul>
-            {% for course in assigned_courses %}
-            <li>
-                <strong>{{ course.name }}</strong> ({{ course.code }}) - {{ course.department }}
-                <!-- Add more course info or links as needed -->
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="table-wrapper" style="margin-top: 16px;">
+            <table class="students-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in assigned_courses %}
+                    <tr>
+                        <td>{{ course.name }}</td>
+                        <td>{{ course.code }}</td>
+                        <td>{{ course.department }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
     {% endif %}
+
 </div>
-{% endblock %}
+{% endblock %} 

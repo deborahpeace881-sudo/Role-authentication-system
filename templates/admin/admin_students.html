@@ -1,15 +1,24 @@
 {% extends "layouts/base_admin.html" %}
 {% block title %}Students{% endblock %}
-{% block header_title %}Students{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>Students List</h2>
-    <div class="students-list">
+
+    <a href="{{ url_for('admin.dashboard') }}" class="back-link">
+        <i class="ti ti-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <div class="page-header">
+        <h2>Students</h2>
+        <p class="subtitle">View and manage all registered students.</p>
+    </div>
+
+    <div class="table-wrapper">
         <table class="students-table">
             <thead>
                 <tr>
                     <th>Email</th>
-                    <th>Action</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -17,14 +26,20 @@
                 <tr>
                     <td>{{ s.email }}</td>
                     <td>
-                        <a href="{{ url_for('admin.admin_student_profile', uid=s.uid) }}" class="action-btn">View Profile</a>
-                        <a href="{{ url_for('admin.admin_override_results', uid=s.uid) }}" class="action-btn" style="background:#2ecc40;">Override Results</a>
+                        <div class="td-actions">
+                            <a href="{{ url_for('admin.admin_student_profile', uid=s.uid) }}" class="action-btn">
+                                <i class="ti ti-eye"></i> View Profile
+                            </a>
+                            <a href="{{ url_for('admin.admin_override_results', uid=s.uid) }}" class="action-btn create-btn">
+                                <i class="ti ti-edit"></i> Override Results
+                            </a>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    <a href="{{ url_for('admin.dashboard') }}" class="action-btn" style="margin-top:20px;">⬅ Back to Admin Dashboard</a>
+
 </div>
-{% endblock %}
+{% endblock %} 

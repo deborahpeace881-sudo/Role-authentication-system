@@ -2,20 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Lecturer{% endblock %}</title>
+    <title>{% block title %}Lecturer Panel{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/lecturer.css') }}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-<!-- Top bar -->
-<header class="topbar">
-    <button id="menu-toggle" class="menu-btn">☰</button>
+<header class="topbar"> 
+    <button id="menu-toggle" class="menu-btn" aria-label="Toggle menu">
+        <i class="ti ti-menu-2"></i>
+    </button>
     <h2>Lecturer Panel</h2>
     <div class="topbar-right">
-        <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
+        <button id="theme-toggle" class="theme-btn" title="Toggle theme">
+            <i class="ti ti-moon"></i>
+        </button>
         <div class="admin-info">
             <span class="admin-name">{{ session.get('name', 'Lecturer') }}</span>
             <span class="admin-email">{{ session.get('email', '') }}</span>
@@ -23,45 +27,59 @@
     </div>
 </header>
 
-<!-- Sidebar -->
-<aside id="sidebar" class="sidebar">
+<aside id="sidebar" class="sidebar"> 
     <div class="sidebar-header">
-        <h3>Menu</h3>
+        <h3>Navigation</h3>
     </div>
     <ul class="sidebar-menu">
-        <li><a href="{{ url_for('lecturer.dashboard') }}" class="menu-item">🏠 Dashboard</a></li>
-        <li><a href="{{ url_for('lecturer.courses') }}" class="menu-item">📚 Courses</a></li>
-        <li><a href="{{ url_for('lecturer.materials') }}" class="menu-item">📁 Materials</a></li>
-        <li><a href="{{ url_for('lecturer.test_assignment') }}" class="menu-item">📝 Assignments/Tests</a></li>
-        <li><a href="{{ url_for('lecturer.students') }}" class="menu-item">👨‍🎓 Students</a></li>
-        <li><a href="{{ url_for('lecturer.results') }}" class="menu-item">📊 Results</a></li>
-        <li><a href="{{ url_for('lecturer.profile') }}" class="menu-item">👤 Profile</a></li>
-        <li><a href="{{ url_for('auth.logout') }}" class="menu-item logout">🚪 Logout</a></li>
+        <li>
+            <a href="{{ url_for('lecturer.dashboard') }}" class="menu-item">
+                <i class="ti ti-layout-dashboard"></i> Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('lecturer.courses') }}" class="menu-item">
+                <i class="ti ti-book"></i> Courses
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('lecturer.materials') }}" class="menu-item">
+                <i class="ti ti-folder"></i> Materials
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('lecturer.test_assignment') }}" class="menu-item">
+                <i class="ti ti-clipboard-text"></i> Assignments/Tests
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('lecturer.students') }}" class="menu-item">
+                <i class="ti ti-school"></i> Students
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('lecturer.results') }}" class="menu-item">
+                <i class="ti ti-chart-bar"></i> Results
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('lecturer.profile') }}" class="menu-item">
+                <i class="ti ti-user"></i> Profile
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('auth.logout') }}" class="menu-item logout">
+                <i class="ti ti-logout"></i> Logout
+            </a>
+        </li>
     </ul>
 </aside>
 
-<!-- Main content -->
-<main id="content" class="content">
+<main id="content" class="content"> 
     {% block content %}{% endblock %}
 </main>
 
-<script>
-    // Hamburger menu toggle
-    const menuBtn = document.getElementById('menu-toggle');
-    const sidebar = document.getElementById('sidebar');
-    menuBtn.addEventListener('click', function() {
-        sidebar.classList.toggle('open');
-    });
-    // Close sidebar when clicking outside on mobile
-    document.addEventListener('click', function(e) {
-        if (window.innerWidth <= 1024 && sidebar.classList.contains('open')) {
-            if (!sidebar.contains(e.target) && e.target !== menuBtn) {
-                sidebar.classList.remove('open');
-            }
-        }
-    });
-</script>
-<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script> 
 {% block extra_js %}{% endblock %}
 </body>
-</html>
+</html> 

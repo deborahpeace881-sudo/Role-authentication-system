@@ -1,55 +1,69 @@
 {% extends "layouts/base_admin.html" %}
 
+{% block title %}Create Lecturer{% endblock %}
+
 {% block content %}
-<div class="form-container">
-    <h1>Create Lecturer Account</h1>
+<div class="dashboard-container">
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for c, m in messages %}
-            <div class="alert alert-{{ c }}">
-                <span>{{ m }}</span>
-                <button type="button" class="close-alert">&times;</button>
-            </div>
-        {% endfor %}
-    {% endwith %}
+    <a href="{{ url_for('admin.dashboard') }}" class="back-link">
+        <i class="ti ti-arrow-left"></i> Back to Dashboard
+    </a>
 
-    <form method="POST" class="admin-form">
-        <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="Enter lecturer email" required>
-        </div>
+    <div class="form-container">
+        <h1>Create Lecturer Account</h1>
 
-        <div class="form-group">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter full name" required>
-        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for c, m in messages %}
+                <div class="alert alert-{{ c }}">
+                    <i class="ti ti-info-circle"></i>
+                    <span>{{ m }}</span>
+                    <button type="button" class="close-alert">&times;</button>
+                </div>
+            {% endfor %}
+        {% endwith %}
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter password" required>
-        </div>
+        <form method="POST" class="admin-form">
 
-        <div class="form-row">
             <div class="form-group">
-                <label for="gender">Gender</label>
-                <select id="gender" name="gender" required>
-                    <option value="">-- Select --</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select>
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter full name" required>
             </div>
 
             <div class="form-group">
-                <label for="dob">Date of Birth</label>
-                <input type="date" id="dob" name="dob" required>
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter lecturer email" required>
             </div>
-        </div>
 
-        <button type="submit" class="btn-submit">Create Lecturer</button>
-        <a href="{{ url_for('admin.dashboard') }}" class="btn-cancel">Cancel</a>
-    </form>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                        <option value="" disabled selected>Select…</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Create Lecturer</button>
+                <a href="{{ url_for('admin.dashboard') }}" class="btn-cancel">Cancel</a>
+            </div>
+
+        </form>
+    </div>
+
 </div>
-
 <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
-{% endblock %}
+{% endblock %} 

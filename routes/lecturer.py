@@ -3,7 +3,7 @@ import os
 from werkzeug.utils import secure_filename
 import csv
 from flask import Response
-from decorators import role_required
+from decorators import role_required 
 
 lecturer_bp = Blueprint("lecturer", __name__, url_prefix="/lecturer")
 
@@ -37,8 +37,7 @@ def dashboard():
         "lecturer/dashboard.html",
         lecturer_name=lecturer_email,
         assigned_courses=assigned_courses
-    )
-
+    ) 
 @lecturer_bp.route("/courses")
 @role_required("lecturer")
 def courses():

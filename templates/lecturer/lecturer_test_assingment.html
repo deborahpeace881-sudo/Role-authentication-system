@@ -1,66 +1,97 @@
 {% extends "layouts/base_lecturer.html" %}
 {% block title %}Assignments/Tests{% endblock %}
-{% block header_title %}Assignments/Tests{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>Create Assignment/Test</h2>
-    <form method="POST" class="assignment-form">
-        <div class="form-group">
-            <label for="course">Course:</label>
-            <select id="course" name="course" required>
-                <option value="">-- Select Course --</option>
-                {% for course in courses %}
-                    <option value="{{ course.id }}">{{ course.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
-        </div>
-        <div class="form-group">
-            <label for="description">Description/Instructions:</label>
-            <textarea id="description" name="description" rows="3" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="due_date">Due Date:</label>
-            <input type="date" id="due_date" name="due_date" required>
-        </div>
-        <div class="form-group">
-            <label for="form_link">Google Form Link (for online test/assignment):</label>
-            <input type="url" id="form_link" name="form_link" placeholder="https://forms.gle/..." required>
-        </div>
-        <button type="submit" class="action-btn">Create Assignment/Test</button>
-    </form>
 
-    <h3 style="margin-top:40px;">Existing Assignments/Tests</h3>
-    <table class="assignments-table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Course</th>
-                <th>Due Date</th>
-                <th>Form Link</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if assignments %}
-                {% for assignment in assignments %}
+    <div class="page-header">
+        <h2>Assignments / Tests</h2>
+        <p class="subtitle">Create and manage assignments and tests for your courses.</p>
+    </div>
+
+    <!-- Create form -->
+    <div class="form-container" style="margin-bottom: 32px;">
+        <h1 style="font-size: 18px; margin-bottom: 18px;">Create New Assignment / Test</h1>
+        <form method="POST" class="admin-form">
+
+            <div class="form-group">
+                <label for="course">Course</label>
+                <select id="course" name="course" required>
+                    <option value="" disabled selected>Select course…</option>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="Enter assignment title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description / Instructions</label>
+                <textarea id="description" name="description" rows="3" placeholder="Enter instructions…" required
+                          style="width:100%; padding:10px 14px; background:var(--bg-primary); border:1px solid var(--border-color); border-radius:var(--radius-sm); font-family:var(--font-sans); font-size:14px; color:var(--text-primary); outline:none; resize:vertical; transition: border-color 0.2s;"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="due_date">Due Date</label>
+                    <input type="date" id="due_date" name="due_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="form_link">Google Form Link</label>
+                    <input type="url" id="form_link" name="form_link" placeholder="https://forms.gle/…" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <i class="ti ti-plus"></i> Create Assignment / Test
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Existing assignments -->
+    <div class="page-header">
+        <h2>Existing Assignments / Tests</h2>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="students-table">
+            <thead>
                 <tr>
-                    <td>{{ assignment.title }}</td>
-                    <td>{{ assignment.course_name }}</td>
-                    <td>{{ assignment.due_date }}</td>
-                    <td>
-                        <a href="{{ assignment.form_link }}" target="_blank" class="action-btn" style="margin-top: 6px; padding: 6px 16px; font-size: 0.95em;">Open Form</a>
-                    </td>
+                    <th>Title</th>
+                    <th>Course</th>
+                    <th>Due Date</th>
+                    <th>Form Link</th>
                 </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="4">No assignments/tests created yet.</td>
-                </tr>
-            {% endif %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% if assignments %}
+                    {% for assignment in assignments %}
+                    <tr>
+                        <td>{{ assignment.title }}</td>
+                        <td>{{ assignment.course_name }}</td>
+                        <td>{{ assignment.due_date }}</td>
+                        <td>
+                            <a href="{{ assignment.form_link }}" target="_blank" class="action-btn" style="padding: 7px 14px; font-size: 12px;">
+                                <i class="ti ti-external-link"></i> Open Form
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="no-data">No assignments or tests created yet.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
 </div>
-{% endblock %}
+{% endblock %} 

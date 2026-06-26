@@ -1,9 +1,15 @@
 {% extends "layouts/base_student.html" %}
 {% block title %}Courses{% endblock %}
-{% block header_title %}Courses{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>Available Courses</h2>
+
+    <div class="page-header">
+        <h2>Available Courses</h2>
+        <p class="subtitle">Browse and enroll in courses available to you.</p>
+    </div>
+
+    {% if all_courses %}
     <div class="courses-grid">
         {% for course in all_courses %}
         <div class="course-card">
@@ -14,27 +20,34 @@
             <p class="course-dept">{{ course.department }}</p>
             <p class="course-desc">{{ course.description }}</p>
             <div class="course-info">
-                <span>Credits: {{ course.credits }}</span>
-                <span>Max Students: {{ course.max_students }}</span>
+                <span><i class="ti ti-star"></i> Credits: {{ course.credits }}</span>
+                <span><i class="ti ti-users"></i> Max: {{ course.max_students }}</span>
             </div>
             {% if course.id in enrolled_course_ids %}
                 <form method="POST" style="display:inline;">
                     <input type="hidden" name="action" value="unenroll">
                     <input type="hidden" name="course_id" value="{{ course.id }}">
-                    <button type="submit" class="btn-drop" onclick="return confirm('Unenroll from this course?')">Unenroll</button>
+                    <button type="submit" class="btn-drop" onclick="return confirm('Unenroll from this course?')">
+                        <i class="ti ti-x"></i> Unenroll
+                    </button>
                 </form>
             {% else %}
                 <form method="POST" style="display:inline;">
                     <input type="hidden" name="action" value="enroll">
                     <input type="hidden" name="course_id" value="{{ course.id }}">
-                    <button type="submit" class="btn-enroll">Enroll</button>
+                    <button type="submit" class="btn-enroll">
+                        <i class="ti ti-plus"></i> Enroll
+                    </button>
                 </form>
             {% endif %}
         </div>
         {% endfor %}
     </div>
-    {% if not all_courses %}
-    <p class="no-data">No courses available.</p>
+    {% else %}
+        <div class="table-wrapper">
+            <p class="no-data">No courses available.</p>
+        </div>
     {% endif %}
+
 </div>
-{% endblock %}
+{% endblock %} 

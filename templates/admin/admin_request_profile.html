@@ -1,24 +1,54 @@
+
+
+
+
+
+
 {% extends "layouts/base_admin.html" %}
 {% block title %}Admin Request Profile{% endblock %}
-{% block header_title %}Admin Request Profile{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <div class="profile-section" style="max-width:400px;margin:auto;">
+
+    <a href="{{ url_for('admin.admin_requests') }}" class="back-link">
+        <i class="ti ti-arrow-left"></i> Back to Requests
+    </a>
+
+    <div class="profile-card">
         <h2>Admin Request Details</h2>
+
         <div class="profile-info">
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Gender:</strong> {{ user.gender }}</p>
-            <p><strong>Date of Birth:</strong> {{ user.date_of_birth }}</p>
-            <p><strong>Current Role:</strong> {{ user.role|capitalize }}</p>
+            <div class="profile-row">
+                <span class="label">Email</span>
+                <span class="value">{{ user.email }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Gender</span>
+                <span class="value">{{ user.gender }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Date of Birth</span>
+                <span class="value">{{ user.date_of_birth }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Current Role</span>
+                <span class="value">{{ user.role|capitalize }}</span>
+            </div>
         </div>
-        <form method="post" action="{{ url_for('admin.approve_admin', request_id=request.id) }}" style="display:inline;">
-            <button type="submit" class="action-btn" style="background:#2ecc40;">Approve</button>
-        </form>
-        <form method="post" action="{{ url_for('admin.reject_admin', request_id=request.id) }}" style="display:inline;">
-            <button type="submit" class="action-btn" style="background:#e74c3c;">Reject</button>
-        </form>
-        <br>
-        <a href="{{ url_for('admin.admin_requests') }}" class="action-btn" style="margin-top:20px;">⬅ Back to Requests</a>
+
+        <div class="profile-actions">
+            <form method="post" action="{{ url_for('admin.approve_admin', request_id=request.id) }}" style="display:inline;">
+                <button type="submit" class="action-btn" style="background: linear-gradient(135deg,#28a745,#20c997);">
+                    <i class="ti ti-check"></i> Approve
+                </button>
+            </form>
+            <form method="post" action="{{ url_for('admin.reject_admin', request_id=request.id) }}" style="display:inline;">
+                <button type="submit" class="action-btn" style="background: linear-gradient(135deg,#e74c3c,#c0392b);">
+                    <i class="ti ti-x"></i> Reject
+                </button>
+            </form>
+        </div>
     </div>
+
 </div>
-{% endblock %}
+{% endblock %} 

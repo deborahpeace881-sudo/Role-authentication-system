@@ -1,73 +1,60 @@
-{% extends "layouts/base_admin.html" %}
-
-{% block title %}Admin Requests{% endblock %}
-{% block header_title %}Pending Admin Requests{% endblock %}
+{% extends "layouts/base_admin.html" %} 
+{% block title %}Admin Requests{% endblock %} 
 
 {% block content %}
 <div class="dashboard-container">
 
-    <table class="requests-table">
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-
-        <tbody>
-        {% if requests %}
-            {% for r in requests %}
-            <tr>
-                <td>{{ r.email }}</td>
-                <td>{{ r.role|capitalize }}</td>
-                <td>
-
-                    <!-- View Profile -->
-                    <a href="{{ url_for('admin.admin_request_profile', request_id=r.id) }}"
-                       class="action-btn">
-                        View Profile
-                    </a>
-
-                    <!-- Approve -->
-                    <form method="POST"
-                          action="{{ url_for('admin.approve_admin', request_id=r.id) }}"
-                          style="display:inline;">
-                        <button type="submit"
-                                class="action-btn"
-                                style="background:#2ecc40;">
-                            Approve
-                        </button>
-                    </form>
-
-                    <!-- Reject -->
-                    <form method="POST"
-                          action="{{ url_for('admin.reject_admin', request_id=r.id) }}"
-                          style="display:inline;">
-                        <button type="submit"
-                                class="action-btn"
-                                style="background:#e74c3c;">
-                            Reject
-                        </button>
-                    </form>
-
-                </td>
-            </tr>
-            {% endfor %}
-        {% else %}
-            <tr>
-                <td colspan="3">No pending requests.</td>
-            </tr>
-        {% endif %}
-        </tbody>
-    </table>
-
-    <br>
-    <a href="{{ url_for('admin.dashboard') }}"
-       class="action-btn"
-       style="margin-top:20px;">
-        ← Back to Admin Dashboard
+    <a href="{{ url_for('admin.dashboard') }}" class="back-link">
+        <i class="ti ti-arrow-left"></i> Back to Dashboard
     </a>
 
+    <div class="page-header">
+        <h2>Pending Requests</h2>
+        <p class="subtitle">Review and action admin role requests.</p>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="requests-table">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if requests %}
+                    {% for r in requests %}
+                    <tr>
+                        <td>{{ r.email }}</td>
+                        <td>{{ r.role|capitalize }}</td>
+                        <td>
+                            <div class="td-actions">
+                                <a href="{{ url_for('admin.admin_request_profile', request_id=r.id) }}" class="action-btn">
+                                    <i class="ti ti-eye"></i> View
+                                </a>
+                                <form method="POST" action="{{ url_for('admin.approve_admin', request_id=r.id) }}" style="display:inline;">
+                                    <button type="submit" class="action-btn" style="background: linear-gradient(135deg,#28a745,#20c997);">
+                                        <i class="ti ti-check"></i> Approve
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ url_for('admin.reject_admin', request_id=r.id) }}" style="display:inline;">
+                                    <button type="submit" class="action-btn" style="background: linear-gradient(135deg,#e74c3c,#c0392b);">
+                                        <i class="ti ti-x"></i> Reject
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="no-data">No pending requests.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
 </div>
-{% endblock %} 
+{% endblock %}

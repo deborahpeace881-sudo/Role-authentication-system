@@ -1,28 +1,38 @@
 {% extends "layouts/base_student.html" %}
 {% block title %}My Enrolled Courses{% endblock %}
-{% block header_title %}My Enrolled Courses{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>My Enrolled Courses</h2>
-    <div class="courses-grid">
-        {% if enrolled_courses %}
-            {% for course in enrolled_courses %}
-            <div class="course-card">
-                <div class="course-header">
-                    <h3>{{ course.name }}</h3>
-                    <span class="course-code">{{ course.code }}</span>
-                </div>
-                <p class="course-dept">{{ course.department }}</p>
-                <p class="course-desc">{{ course.description }}</p>
-                <div class="course-info">
-                    <span>Credits: {{ course.credits }}</span>
-                    <span>Max Students: {{ course.max_students }}</span>
-                </div>
-            </div>
-            {% endfor %}
-        {% else %}
-            <p class="no-data">You are not enrolled in any courses yet.</p>
-        {% endif %}
+
+    <div class="page-header">
+        <h2>My Enrolled Courses</h2>
+        <p class="subtitle">All courses you are currently enrolled in.</p>
     </div>
+
+    {% if enrolled_courses %}
+    <div class="courses-grid">
+        {% for course in enrolled_courses %}
+        <div class="course-card">
+            <div class="course-header">
+                <h3>{{ course.name }}</h3>
+                <span class="course-code">{{ course.code }}</span>
+            </div>
+            <p class="course-dept">{{ course.department }}</p>
+            <p class="course-desc">{{ course.description }}</p>
+            <div class="course-info">
+                <span><i class="ti ti-star"></i> Credits: {{ course.credits }}</span>
+                <span><i class="ti ti-users"></i> Max: {{ course.max_students }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="table-wrapper">
+            <p class="no-data">You are not enrolled in any courses yet.
+                <a href="{{ url_for('student.student_courses') }}" style="color: var(--accent-color); font-weight: 500;">Browse courses</a>
+            </p>
+        </div>
+    {% endif %}
+
 </div>
-{% endblock %}
+{% endblock %} 

@@ -1,29 +1,64 @@
 {% extends "layouts/base_lecturer.html" %}
-{% block title %}Profile{% endblock %}
-{% block header_title %}Profile{% endblock %}
+{% block title %}My Profile{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>My Profile</h2>
-    <div class="profile-section">
-        <div class="profile-picture">
-            {% if lecturer.profile_picture %}
-                <img src="{{ url_for('static', filename=lecturer.profile_picture) }}" alt="Profile Picture" width="120" height="120" style="border-radius: 50%;">
-            {% else %}
-                <img src="{{ url_for('static', filename='img/default-profile.png') }}" alt="Profile Picture" width="120" height="120" style="border-radius: 50%;">
-            {% endif %}
-        </div>
-        <form method="POST" enctype="multipart/form-data" class="profile-upload-form">
-            <label for="profile_picture">Update Profile Picture:</label>
-            <input type="file" name="profile_picture" id="profile_picture" accept="image/*" required>
-            <button type="submit" class="action-btn">Upload</button>
-        </form>
-        <div class="profile-info">
-            <p><strong>Name:</strong> {{ lecturer.name }}</p>
-            <p><strong>Email:</strong> {{ lecturer.email }}</p>
-            <p><strong>Gender:</strong> {{ lecturer.gender }}</p>
-            <p><strong>Date of Birth:</strong> {{ lecturer.date_of_birth }}</p>
-            <p><strong>Role:</strong> {{ lecturer.role|capitalize }}</p>
-        </div>
+
+    <div class="page-header">
+        <h2>My Profile</h2>
+        <p class="subtitle">View and update your profile information.</p>
     </div>
+
+    <div class="profile-card" style="max-width: 520px;">
+
+        <!-- Profile picture -->
+        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
+            {% if lecturer.profile_picture %}
+                <img src="{{ url_for('static', filename=lecturer.profile_picture) }}" alt="Profile Picture"
+                     style="width:80px; height:80px; border-radius:50%; object-fit:cover; border: 2px solid var(--border-color);">
+            {% else %}
+                <img src="{{ url_for('static', filename='img/default-profile.png') }}" alt="Profile Picture"
+                     style="width:80px; height:80px; border-radius:50%; object-fit:cover; border: 2px solid var(--border-color);">
+            {% endif %}
+            <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 8px;">
+                <label style="font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-secondary);">
+                    Update Profile Picture
+                </label>
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                    <input type="file" name="profile_picture" id="profile_picture" accept="image/*" required
+                           style="font-size: 13px; color: var(--text-primary);">
+                    <button type="submit" class="action-btn" style="padding: 7px 14px; font-size: 12px;">
+                        <i class="ti ti-upload"></i> Upload
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Profile info -->
+        <div class="profile-info">
+            <div class="profile-row">
+                <span class="label">Name</span>
+                <span class="value">{{ lecturer.name }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Email</span>
+                <span class="value">{{ lecturer.email }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Gender</span>
+                <span class="value">{{ lecturer.gender }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Date of Birth</span>
+                <span class="value">{{ lecturer.date_of_birth }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Role</span>
+                <span class="value">{{ lecturer.role|capitalize }}</span>
+            </div>
+        </div>
+
+    </div>
+
 </div>
-{% endblock %}
+{% endblock %} 

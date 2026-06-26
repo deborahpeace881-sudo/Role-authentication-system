@@ -1,39 +1,72 @@
 {% extends "layouts/base_lecturer.html" %}
 {% block title %}Materials{% endblock %}
-{% block header_title %}Materials{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>Teaching Materials</h2>
-    <p>Upload and manage your course materials here.</p>
-    <!-- Upload form with course selection -->
-    <div class="materials-upload">
-        <form method="POST" enctype="multipart/form-data">
-            <label for="material_file">Upload Material (PDF, DOCX, etc.):</label>
-            <input type="file" id="material_file" name="material_file" accept=".pdf,.doc,.docx" required>
-            <label for="course_name">Select Course:</label>
-            <select id="course_name" name="course_name" required>
-                <option value="">-- Select Course --</option>
-                {% for course in courses %}
-                    <option value="{{ course.name }}">{{ course.name }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit" class="action-btn">Upload</button>
+
+    <div class="page-header">
+        <h2>Teaching Materials</h2>
+        <p class="subtitle">Upload and manage your course materials.</p>
+    </div>
+
+    <!-- Upload form -->
+    <div class="form-container" style="margin-bottom: 28px;">
+        <h1 style="font-size: 18px; margin-bottom: 18px;">Upload New Material</h1>
+        <form method="POST" enctype="multipart/form-data" class="admin-form">
+            <div class="form-group">
+                <label for="material_file">File (PDF, DOC, DOCX)</label>
+                <input type="file" id="material_file" name="material_file" accept=".pdf,.doc,.docx" required>
+            </div>
+            <div class="form-group">
+                <label for="course_name">Course</label>
+                <select id="course_name" name="course_name" required>
+                    <option value="" disabled selected>Select course…</option>
+                    {% for course in courses %}
+                        <option value="{{ course.name }}">{{ course.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <i class="ti ti-upload"></i> Upload
+                </button>
+            </div>
         </form>
     </div>
-    <div class="materials-list">
-        <h3>Your Uploaded Materials</h3>
-        <ul>
-            {% if materials %}
-                {% for material in materials %}
-                <li>
-                    <a href="{{ material.url }}" target="_blank">{{ material.filename }}</a>
-                    ({{ material.course_name }})
-                </li>
-                {% endfor %}
-            {% else %}
-                <li>No materials uploaded yet.</li>
-            {% endif %}
-        </ul>
+
+    <!-- Materials list -->
+    <div class="page-header">
+        <h2>Uploaded Materials</h2>
     </div>
+
+    <div class="table-wrapper">
+        <table class="students-table">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Course</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if materials %}
+                    {% for material in materials %}
+                    <tr>
+                        <td>
+                            <a href="{{ material.url }}" target="_blank" style="color: var(--accent-color); text-decoration: none; font-weight: 500;">
+                                <i class="ti ti-file"></i> {{ material.filename }}
+                            </a>
+                        </td>
+                        <td>{{ material.course_name }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="2" class="no-data">No materials uploaded yet.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
 </div>
-{% endblock %}
+{% endblock %} 

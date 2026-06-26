@@ -1,17 +1,41 @@
 {% extends "layouts/base_admin.html" %}
 {% block title %}Student Profile{% endblock %}
-{% block header_title %}Student Profile{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <div class="profile-section" style="max-width:400px;margin:auto;">
+
+    <a href="{{ url_for('admin.admin_students') }}" class="back-link">
+        <i class="ti ti-arrow-left"></i> Back to Students
+    </a>
+
+    <div class="profile-card">
         <h2>Student Profile</h2>
+
         <div class="profile-info">
-            <p><strong>Email:</strong> {{ student.email }}</p>
-            <p><strong>Gender:</strong> {{ student.gender }}</p>
-            <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
-            <p><strong>Role:</strong> {{ student.role|capitalize }}</p>
+            <div class="profile-row">
+                <span class="label">Email</span>
+                <span class="value">{{ student.email }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Gender</span>
+                <span class="value">{{ student.gender }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Date of Birth</span>
+                <span class="value">{{ student.date_of_birth }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Role</span>
+                <span class="value">{{ student.role|capitalize }}</span>
+            </div>
         </div>
-        <a href="{{ url_for('admin.admin_students') }}" class="action-btn" style="margin-top:20px;">⬅ Back to Students</a>
+
+        <div class="profile-actions">
+            <a href="{{ url_for('admin.admin_override_results', uid=student.uid) }}" class="action-btn create-btn">
+                <i class="ti ti-edit"></i> Override Results
+            </a>
+        </div>
     </div>
+
 </div>
-{% endblock %}
+{% endblock %} 

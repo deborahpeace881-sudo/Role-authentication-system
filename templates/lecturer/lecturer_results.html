@@ -1,41 +1,77 @@
 {% extends "layouts/base_lecturer.html" %}
 {% block title %}Results{% endblock %}
-{% block header_title %}Results{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lecturer.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>Results</h2>
-    <form method="GET" class="filter-form">
-        <label for="course_filter">Filter by Course:</label>
-        <select name="course_id" id="course_filter" onchange="this.form.submit()">
-            <option value="">-- All Courses --</option>
-            {% for course in courses %}
-                <option value="{{ course.id }}" {% if selected_course_id == course.id %}selected{% endif %}>
-                    {{ course.name }}
-                </option>
-            {% endfor %}
-        </select>
+
+    <div class="page-header">
+        <h2>Results</h2>
+        <p class="subtitle">View and manage student results across your courses.</p>
+    </div>
+
+    <!-- Course filter -->
+    <form method="GET" class="filter-form" style="margin-bottom: 20px;">
+        <div class="form-group" style="max-width: 300px;">
+            <label for="course_filter">Filter by Course</label>
+            <select name="course_id" id="course_filter" onchange="this.form.submit()">
+                <option value="">-- All Courses --</option>
+                {% for course in courses %}
+                    <option value="{{ course.id }}" {% if selected_course_id == course.id %}selected{% endif %}>
+                        {{ course.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
     </form>
+
+    <!-- Results table -->
     {% if results %}
-    <table class="results-table">
-        <thead>
-            <tr>
-                <th>Student Name</th>
-                <th>Student Email</th>
-                <th>Score</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entry in results %}
-            <tr>
-                <td>{{ entry.student_name }}</td>
-                <td>{{ entry.student_email }}</td>
-                <td>{{ entry.score }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-wrapper" style="margin-bottom: 24px;">
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Student Email</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in results %}
+                <tr>
+                    <td>{{ entry.student_name }}</td>
+                    <td>{{ entry.student_email }}</td>
+                    <td><strong style="color: var(--accent-color);">{{ entry.score }}</strong></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% else %}
-    <p>No results to display.</p>
+        <div class="table-wrapper" style="margin-bottom: 24px;">
+            <p class="no-data">No results to display.</p>
+        </div>
     {% endif %}
+
+    <!-- Export / Print / Import -->
+    <div class="results-actions">
+        <a href="{{ url_for('lecturer.export_results') }}" class="action-btn">
+            <i class="ti ti-file-export"></i> Export CSV
+        </a>
+        <button onclick="window.print()" class="action-btn">
+            <i class="ti ti-printer"></i> Print
+        </button>
+        <form method="POST" enctype="multipart/form-data" class="import-form">
+            <label for="import_file">Import Scores (CSV):</label>
+            <input type="file" name="import_file" id="import_file" accept=".csv" required>
+            <button type="submit" class="action-btn">
+                <i class="ti ti-file-import"></i> Import
+            </button>
+        </form>
+    </div>
+
 </div>
-{% endblock %}
+{% endblock %} 

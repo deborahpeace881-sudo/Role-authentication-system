@@ -1,59 +1,69 @@
 {% extends "layouts/base_admin.html" %}
 {% block title %}Manage Lecturers{% endblock %}
-{% block header_title %}Manage Lecturers{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>Manage Lecturers</h2>
-    <div class="search-container" style="margin-bottom: 20px;">
-        <input type="text" id="searchInput" placeholder="Search by name or email..." class="search-box">
+
+    <a href="{{ url_for('admin.dashboard') }}" class="back-link">
+        <i class="ti ti-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <div class="page-header">
+        <h2>Lecturers</h2>
+        <p class="subtitle">Manage all lecturer accounts on the platform.</p>
     </div>
-    <table class="admin-table" id="lecturersTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Gender</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for lecturer in lecturers %}
-            <tr>
-                <td>{{ lecturer.name }}</td>
-                <td>{{ lecturer.email }}</td>
-                <td>{{ lecturer.gender }}</td>
-                <td class="actions">
-                    <a href="{{ url_for('admin.admin_lecturer_profile', uid=lecturer.uid) }}" class="action-btn">View</a>
-                    <button class="action-btn" style="background:#e74c3c;" onclick="deleteLecturer('{{ lecturer.uid }}')">Delete</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <a href="{{ url_for('admin.dashboard') }}" class="action-btn" style="margin-top:20px;">⬅ Back to Admin Dashboard</a>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search by name or email…" class="search-box">
+    </div>
+
+    <div class="table-wrapper">
+        <table class="admin-table" id="lecturersTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lecturer in lecturers %}
+                <tr>
+                    <td>{{ lecturer.name }}</td>
+                    <td>{{ lecturer.email }}</td>
+                    <td>{{ lecturer.gender }}</td>
+                    <td>
+                        <div class="td-actions">
+                            <a href="{{ url_for('admin.admin_lecturer_profile', uid=lecturer.uid) }}" class="action-btn">
+                                <i class="ti ti-eye"></i> View
+                            </a>
+                            <button class="action-btn" style="background:linear-gradient(135deg,#e74c3c,#c0392b);" onclick="deleteLecturer('{{ lecturer.uid }}')">
+                                <i class="ti ti-trash"></i> Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </div>
+
 <script>
-// Search functionality
 document.getElementById('searchInput').addEventListener('keyup', function() {
     let filter = this.value.toLowerCase();
-    let table = document.getElementById('lecturersTable');
-    let rows = table.getElementsByTagName('tr');
-
+    let rows = document.getElementById('lecturersTable').getElementsByTagName('tr');
     for (let i = 1; i < rows.length; i++) {
-        let text = rows[i].textContent.toLowerCase();
-        rows[i].style.display = text.includes(filter) ? '' : 'none';
+        rows[i].style.display = rows[i].textContent.toLowerCase().includes(filter) ? '' : 'none';
     }
 });
 
-// Delete lecturer
 function deleteLecturer(uid) {
     if (confirm('Are you sure you want to delete this lecturer?')) {
         fetch(`/admin/lecturers/${uid}/delete`, { method: 'POST' })
-            .then(response => {
-                if (response.ok) {
-                    location.reload();
-                }
-            });
+            .then(response => { if (response.ok) location.reload(); });
     }
 }
 </script>

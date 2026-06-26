@@ -1,18 +1,41 @@
 {% extends "layouts/base_lecturer.html" %}
-{% block title %}Enter/View Score{% endblock %}
-{% block header_title %}Enter/View Score{% endblock %}
+{% block title %}Enter Score{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>Enter/View Score</h2>
-    <p><strong>Student:</strong> {{ student.name }} ({{ student.email }})</p>
-    <p><strong>Course:</strong> {{ course.name }} ({{ course.code }})</p>
 
-    <form method="POST">
-        <div class="form-group">
-            <label for="score">Score:</label>
-            <input type="number" id="score" name="score" min="0" max="100" value="{{ score or '' }}" required>
+    <a href="{{ url_for('lecturer.students') }}" class="back-link">
+        <i class="ti ti-arrow-left"></i> Back to Students
+    </a>
+
+    <div class="form-container">
+        <h1>Enter / View Score</h1>
+
+        <div class="profile-info" style="margin-bottom: 24px;">
+            <div class="profile-row">
+                <span class="label">Student</span>
+                <span class="value">{{ student.name }} ({{ student.email }})</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Course</span>
+                <span class="value">{{ course.name }} ({{ course.code }})</span>
+            </div>
         </div>
-        <button type="submit" class="action-btn">Save</button>
-    </form>
+
+        <form method="POST" class="admin-form">
+            <div class="form-group">
+                <label for="score">Score (0 – 100)</label>
+                <input type="number" id="score" name="score" min="0" max="100"
+                       value="{{ score or '' }}" placeholder="Enter score" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <i class="ti ti-device-floppy"></i> Save Score
+                </button>
+            </div>
+        </form>
+
+    </div>
+
 </div>
-{% endblock %}
+{% endblock %} 

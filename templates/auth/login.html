@@ -1,53 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 </head>
 <body class="auth-body">
 
-<div class="auth-container">
-    <div class="auth-card">
-        <div class="auth-header">
-            <h1>Welcome Back</h1>
-            <p>Login to your account</p>
-        </div>
+    <!-- Tab switcher -->
+    <div class="auth-tabs">
+        <button class="auth-tab-btn active">Sign in</button>
+        <a href="{{ url_for('auth.signup') }}" style="text-decoration:none;">
+            <button class="auth-tab-btn">Create account</button>
+        </a>
+    </div>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% for c, m in messages %}
-                <div class="alert alert-{{ c }}">
-                    <span>{{ m }}</span>
-                    <button type="button" class="close-alert">&times;</button>
-                </div>
-            {% endfor %}
-        {% endwith %}
+    <div class="auth-container">
+        <div class="auth-card">
 
-        <form method="POST" class="auth-form">
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">✉️</span>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
+            <div class="auth-header">
+                <p class="auth-eyebrow">Welcome back</p>
+                <h1>Good to see<br><em>you again.</em></h1>
+                <p>Sign in to continue where you left off.</p>
             </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">🔒</span>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for c, m in messages %}
+                    <div class="alert alert-{{ c }}">
+                        <i class="ti ti-info-circle" aria-hidden="true"></i>
+                        <span>{{ m }}</span>
+                        <button type="button" class="close-alert" aria-label="Dismiss">&times;</button>
+                    </div>
+                {% endfor %}
+            {% endwith %}
+
+            <form method="POST" class="auth-form">
+
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">
+                            <i class="ti ti-mail" aria-hidden="true"></i>
+                        </span>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">
+                            <i class="ti ti-lock" aria-hidden="true"></i>
+                        </span>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="••••••••"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <button type="submit" class="auth-btn">Sign in →</button>
+
+            </form>
+
+            <div class="auth-footer">
+                <p>No account yet? <a href="{{ url_for('auth.signup') }}">Create one here</a></p>
             </div>
 
-            <button type="submit" class="auth-btn">Login</button>
-        </form>
-
-        <div class="auth-footer">
-            <p>Don't have an account? <a href="{{ url_for('auth.signup') }}">Sign up here</a></p>
         </div>
     </div>
-</div>
 
-<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 </body>
-</html>
+</html> 

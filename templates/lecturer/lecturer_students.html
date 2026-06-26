@@ -1,11 +1,15 @@
 {% extends "layouts/base_lecturer.html" %}
 {% block title %}Students{% endblock %}
-{% block header_title %}Students{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
-    <h2>Students in Your Courses</h2>
-    <p>Below is a list of students enrolled in your assigned courses. You can enter their scores.</p>
-    <div class="students-list">
+
+    <div class="page-header">
+        <h2>Students in Your Courses</h2>
+        <p class="subtitle">Students enrolled in your assigned courses. You can enter their scores here.</p>
+    </div>
+
+    <div class="table-wrapper">
         <table class="students-table">
             <thead>
                 <tr>
@@ -23,11 +27,9 @@
                         <td>{{ entry.student_name }}</td>
                         <td>{{ entry.student_email }}</td>
                         <td>
-                            <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                                <a href="{{ url_for('lecturer.enter_score', student_id=entry.student_id, course_id=entry.course_id) }}"
-                                   class="action-btn"
-                                   style="margin-top: 6px; padding: 6px 16px; font-size: 0.95em;">
-                                    Enter Score
+                            <div class="td-actions">
+                                <a href="{{ url_for('lecturer.enter_score', student_id=entry.student_id, course_id=entry.course_id) }}" class="action-btn">
+                                    <i class="ti ti-pencil"></i> Enter Score
                                 </a>
                             </div>
                         </td>
@@ -35,11 +37,12 @@
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="4">No students enrolled in your courses yet.</td>
+                        <td colspan="4" class="no-data">No students enrolled in your courses yet.</td>
                     </tr>
                 {% endif %}
             </tbody>
         </table>
     </div>
+
 </div>
-{% endblock %}
+{% endblock %} 
