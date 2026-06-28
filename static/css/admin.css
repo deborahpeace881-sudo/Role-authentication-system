@@ -356,7 +356,7 @@ body {
 
 .action-buttons {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 12px;
 }
 
@@ -376,6 +376,8 @@ body {
     border: none;
     cursor: pointer;
     white-space: nowrap;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .action-btn:hover {
@@ -989,6 +991,12 @@ body {
         grid-template-columns: 1fr 1fr;
     }
 
+    .action-btn {
+        white-space: normal;
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+
     .students-table,
     .requests-table,
     .admin-table,
@@ -1006,4 +1014,4 @@ body {
     .results-table td {
         padding: 10px 12px;
     }
-}
+} 
